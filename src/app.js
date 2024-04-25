@@ -1,23 +1,27 @@
 require("dotenv").config();
 const express = require("express");
 const Rota = require("./Routers/router");
-const  mongoose  = require("mongoose");
-const dbUser= process.env.DB_USER;
-const dbPassoword= process.env.DB_PASSOWORD;
-const app = express();
+const conexaoDb=require('./Database/connexao');
+const cookieParser = require('cookie-parser');
+const cors = require("cors");
 
-app.use(express.json())
+const app = express();
+app.use(cookieParser());
+app.use(express.json());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type'],
+
+}));
+
+
 app.use(Rota);
 
-const uri = `mongodb+srv://${dbUser}:${dbPassoword}@cluster0.ucnxqct.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+conexaoDb();
+
+app.listen(process.env.PORT,()=>{
+    console.log("server porta",process.env.PORT)
+});
 
 
-mongoose.connect(uri)
-
-.then(()=>{
-    app.listen(process.env.PORT,()=>{
-        console.log("server porta",process.env.PORT)
-    })
-})
-
-.catch((err)=>console.log(err))

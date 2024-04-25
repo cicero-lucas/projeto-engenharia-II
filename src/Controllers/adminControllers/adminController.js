@@ -1,12 +1,16 @@
 require('dotenv').config()
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken')
-const conexaoDb = require("../../Database/connexao");
+const verCookie = require("../../Helpers/Helpers")
+const cookie = require('cookie');
+const cookieParser = require('cookie-parser');
 const User = require('../../Models/User');
+const tipopost = require('../../Models/tipopost');
+const Post = require('../../Models/Post');
 
 const cadastraUsuario = async (req,res)=>{
     try{
-        const {nome,email,senha,confirmsenha}=req.body;
+        const {nome,perfil="",email,senha,confirmsenha}=req.body;
     
         if(!nome){
             return res.status(422).json({msg:'o nome é obrigatorio!'});
@@ -22,7 +26,6 @@ const cadastraUsuario = async (req,res)=>{
         }else if(senha !== confirmsenha){
             return res.status(422).json({msg:'confirme a senha corretamete!'});
         }
-
         const userExiste = await User.findOne({email:email})
 
         if(userExiste){
@@ -35,7 +38,8 @@ const cadastraUsuario = async (req,res)=>{
         // criarUsario
 
         const user = new User({
-            nome,
+            name:nome,
+            perfil:(perfil)?perfil:nome,
             email,
             senha:passorwodHash,
         })
@@ -53,14 +57,16 @@ const cadastraUsuario = async (req,res)=>{
    
 }
 
+// login
+
 const paginaLogin = async (req,res)=>{
     try {
         const {email,senha}=req.body;
 
         if(!email){
-            return res.status(422).json({mensagem:"email é obrigatorio !"});
+            return res.status(422).json({msg:"email é obrigatorio !"});
         }else if(!senha){
-            return res.status(422).json({mensagem:" senha é obrigatorio !"});
+            return res.status(422).json({msg:" senha é obrigatorio !"});
         }
 
         const user = await User.findOne({email:email})
@@ -71,7 +77,7 @@ const paginaLogin = async (req,res)=>{
         const checksenha = await bcrypt.compare(senha,user.senha)
 
         if(!checksenha){
-            return res.status(422).json({mensagem:" senha invalida !"});
+            return res.status(422).json({msg:" senha invalida !"});
         }
 
         try {
@@ -79,11 +85,8 @@ const paginaLogin = async (req,res)=>{
             const token = jwt.sign({
                 iduser:user._id
             },secret,)
-
             res.status(200).json(
-                {"mensagem":"Login feito com sucesso",
-                token:token
-                }
+                {token}
             );
 
         } catch {
@@ -95,21 +98,61 @@ const paginaLogin = async (req,res)=>{
     }
 }
 
+const editarPerfil = async (req,res)=>{
+    // const {perfil}=req.body;
+    // if(!perfil){
+    //     return res.json(422).json({"mensagem":"nome perfil obrigatorio !"})
+    // }
+    
+    // const user = await User.
+    verCookie.verIdUser()
+
+    
+
+    
+
+}
+
+
+
+const verTipo = async (req,res) =>{
+    try {
+        const tipo = await tipopost.findById("6626aec654ae837857927213");
+        return res.json(tipo)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const paginaPosts = async (req,res)=>{
     try{
-        const iduser = req.params.id;
-
-        const user = await User.findById(iduser, '-senha')
-
-        if(!user){
-            res.json({mensagem:"usuario sem login"})
+    
+        const{titulo,texto,caminhoImg,tipo}=req.body;
+        if(!titulo){
+            return res.status(422).json({mensagem:"O campos titulo é obrigatorio!"});
+        }else if(!texto){
+            return res.status(422).json({mensagem:"o campos texto é obrigatorio!"});
+        }else if(!tipo){
+            return res.status(422).json({mensagem:"o campos tipo é obrigatorio!"});
+        }
+        
+        const post = new Post({
+            "tituloPost": titulo,
+            "caminhoImg":caminhoImg,
+            "textoPost":texto,
+            "fk_tipo":tipo,
+            "fk_user":"66256877dbedb1c6f45be70b"
+            
+        })
+        try{
+            await post.save();
+            return res.status(200).json("post casastrado com sucesso")
+        }catch{
+            return res.status(500).json("erro ao cadastra o post na plataforma")
         }
 
-        res.status(200).json(
-            {"mensagem":"Login feito com sucesso",
-            
-            }
-        ); 
+
+         
     }catch{ 
 
     }
@@ -121,5 +164,8 @@ const paginaPosts = async (req,res)=>{
 module.exports={
     cadastraUsuario,
     paginaLogin,
-    paginaPosts
+    paginaPosts,
+    verTipo,
+
+    editarPerfil
 }
