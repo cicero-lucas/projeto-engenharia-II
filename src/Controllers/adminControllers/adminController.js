@@ -24,12 +24,12 @@ const cadastraUsuario = async (req,res)=>{
             return res.status(422).json({msg:'a confirmação de senha é obrigatorio!'})
         
         }else if(senha !== confirmsenha){
-            return res.status(422).json({msg:'confirme a senha corretamete!'});
+            return res.status(422).json({msg:'confirme a senha corretamete!', opc:2});
         }
         const userExiste = await User.findOne({email:email})
 
         if(userExiste){
-            return res.status(422).json({msg:'usuario já cadastrado'});
+            return res.status(422).json({msg:'usuario já cadastrado', opc:3});
         }
 
         const salt = await bcrypt.genSalt(12);
@@ -46,9 +46,9 @@ const cadastraUsuario = async (req,res)=>{
 
         try{
             await user.save();
-            return res.status(200).json("Usuario casastrado com sucesso")
+            return res.status(200).json({msg:"Usuario casastrado com sucesso", opc:1})
         }catch{
-            return res.status(500).json("erro ao cadastra-se na plataforma")
+            return res.status(500).json({ msg:"erro ao cadastra-se na plataforma", opc:2})
         }
     }catch{
         console.log("erro ao cadastra usuario");
@@ -77,7 +77,7 @@ const paginaLogin = async (req,res)=>{
         const checksenha = await bcrypt.compare(senha,user.senha)
 
         if(!checksenha){
-            return res.status(422).json({msg:" senha invalida !"});
+            return res.status(422).json({msg:" senha invalida !", opc:2});
         }
 
         try {
@@ -86,7 +86,7 @@ const paginaLogin = async (req,res)=>{
                 iduser:user._id
             },secret,)
             res.status(200).json(
-                {token}
+                {token, opc:1,msg:"bem vindo"}
             );
 
         } catch {
