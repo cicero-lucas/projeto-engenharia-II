@@ -2,8 +2,7 @@ require('dotenv').config()
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken')
 const verCookie = require("../../Helpers/Helpers")
-const cookie = require('cookie');
-const cookieParser = require('cookie-parser');
+const mongoose = require("mongoose");
 const User = require('../../Models/User');
 const tipopost = require('../../Models/tipopost');
 const Post = require('../../Models/Post');
@@ -107,10 +106,6 @@ const editarPerfil = async (req,res)=>{
     // const user = await User.
     verCookie.verIdUser()
 
-    
-
-    
-
 }
 
 
@@ -124,10 +119,11 @@ const verTipo = async (req,res) =>{
     }
 }
 
-const paginaPosts = async (req,res)=>{
+const criarPost = async (req,res)=>{
     try{
     
-        const{titulo,texto,caminhoImg,tipo}=req.body;
+        const{titulo,texto,tipo}=req.body;
+
         if(!titulo){
             return res.status(422).json({mensagem:"O campos titulo é obrigatorio!"});
         }else if(!texto){
@@ -135,28 +131,45 @@ const paginaPosts = async (req,res)=>{
         }else if(!tipo){
             return res.status(422).json({mensagem:"o campos tipo é obrigatorio!"});
         }
-        
+
         const post = new Post({
             "tituloPost": titulo,
-            "caminhoImg":caminhoImg,
+            "caminhoImg":req.file.path,
             "textoPost":texto,
             "fk_tipo":tipo,
-            "fk_user":"66256877dbedb1c6f45be70b"
-            
+            "fk_user":req.userId
         })
         try{
             await post.save();
             return res.status(200).json("post casastrado com sucesso")
-        }catch{
-            return res.status(500).json("erro ao cadastra o post na plataforma")
-        }
-
-
-         
+        }catch(erro){
+            return res.status(500).json("erro ao cadastra o post na plataforma");
+        }  
     }catch{ 
 
     }
+}
 
+const buscaMpost = async (req, res) => {
+    try {
+       const id= req.userId
+        const posts = await Post.find({ fk_user: id}).populate([
+            {path:'fk_user', select:'perfil'},
+            { path:"fk_tipo",select:"tipoPost"}
+        ]);
+
+        if (!posts || posts.length === 0) {
+            return res.status(404).json({ message: "Nenhum post encontrado" });
+        }
+        
+        return res.status(200).json(posts);
+
+    } catch (error) {
+     
+        console.error(error);
+       
+        return res.status(500).json({ error: "Erro ao buscar posts" });
+    }
 }
 
 
@@ -164,8 +177,8 @@ const paginaPosts = async (req,res)=>{
 module.exports={
     cadastraUsuario,
     paginaLogin,
-    paginaPosts,
+    criarPost,
     verTipo,
-
-    editarPerfil
+    editarPerfil,
+    buscaMpost
 }

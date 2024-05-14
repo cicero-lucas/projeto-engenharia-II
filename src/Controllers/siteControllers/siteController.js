@@ -23,6 +23,7 @@ const verTodosPost = async (req, res) => {
     }
 }
 
+
 const verCategorias = async (req, res)=>{
     try {
         const categoria = await tipopost.find()
@@ -53,6 +54,105 @@ const buscarPost = async (req,res) =>{
     }
 }
 
+const categoriaProgramacao = async (req, res) => {
+    try {
+
+        const posts = await Post.find().populate([
+            {path:'fk_user', select:'perfil'},
+            { path:"fk_tipo",select:"tipoPost",match:{ tipoPost:'Programação' } }
+        ]);
+        const filteredPosts = posts.filter(post => post.fk_tipo !== null);
+
+        if (!filteredPosts|| filteredPosts.length === 0) {
+            return res.status(404).json({ message: "Nenhum post encontrado" });
+        }
+        
+        return res.status(200).json(filteredPosts);
+
+    } catch (error) {
+        return res.status(500).json({ error: error });
+    }
+}
+
+const categoriaAtualidade = async (req, res) => {
+    try {
+
+        const posts = await Post.find().populate([
+            {path:'fk_user', select:'perfil'},
+            { path:"fk_tipo",select:"tipoPost",match:{ tipoPost:'Atualidade' } }
+        ]);
+        const filteredPosts = posts.filter(post => post.fk_tipo !== null);
+
+        if (!filteredPosts|| filteredPosts.length === 0) {
+            return res.status(404).json({ message: "Nenhum post encontrado" });
+        }
+        
+        return res.status(200).json(filteredPosts);
+
+    } catch (error) {
+        return res.status(500).json({ error: error });
+    }
+}
+
+const categoriaSoftware = async (req, res) => {
+    try {
+
+        const posts = await Post.find().populate([
+            {path:'fk_user', select:'perfil'},
+            { path:"fk_tipo",select:"tipoPost",match:{ tipoPost:'Atualidade' } }
+        ]);
+        const filteredPosts = posts.filter(post => post.fk_tipo !== null);
+
+        if (!filteredPosts|| filteredPosts.length === 0) {
+            return res.status(404).json({ message: "Nenhum post encontrado" });
+        }
+        
+        return res.status(200).json(filteredPosts);
+
+    } catch (error) {
+        return res.status(500).json({ error: error });
+    }
+}
+
+const categoriaHadware = async (req, res) => {
+    try {
+
+        const posts = await Post.find().populate([
+            {path:'fk_user', select:'perfil'},
+            { path:"fk_tipo",select:"tipoPost",match:{ tipoPost:'Atualidade' } }
+        ]);
+        const filteredPosts = posts.filter(post => post.fk_tipo !== null);
+
+        if (!filteredPosts|| filteredPosts.length === 0) {
+            return res.status(404).json({ message: "Nenhum post encontrado" });
+        }
+        
+        return res.status(200).json(filteredPosts);
+
+    } catch (error) {
+        return res.status(500).json({ error: error });
+    }
+}
+
+const categoriaIa = async (req, res) => {
+    try {
+
+        const posts = await Post.find().populate([
+            {path:'fk_user', select:'perfil'},
+            { path:"fk_tipo",select:"tipoPost",match:{ tipoPost:'IA' } }
+        ]);
+        const filteredPosts = posts.filter(post => post.fk_tipo !== null);
+
+        if (!filteredPosts|| filteredPosts.length === 0) {
+            return res.status(404).json({ message: "Nenhum post encontrado" });
+        }
+        
+        return res.status(200).json(filteredPosts);
+
+    } catch (error) {
+        return res.status(500).json({ error: error });
+    }
+}
 const favoritar= async(req, res)=>{
     const {idPost}= req.params;
 
@@ -64,6 +164,11 @@ const favoritar= async(req, res)=>{
 module.exports={
     verCategorias,
     verTodosPost,
-    buscarPost
+    buscarPost,
+    categoriaProgramacao,
+    categoriaAtualidade,
+    categoriaHadware,
+    categoriaSoftware,
+    categoriaIa,
 }
 

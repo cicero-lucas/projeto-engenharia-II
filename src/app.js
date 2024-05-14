@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config()
 const express = require("express");
 const Rota = require("./Routers/router");
 const conexaoDb=require('./Database/connexao');
@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 
 }));
 
