@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const User = require('../../Models/User');
 const tipopost = require('../../Models/tipopost');
 const Post = require('../../Models/Post');
+const apagarImg = require('../../Helpers/uploadsAquivo')
 
 const cadastraUsuario = async (req,res)=>{
     try{
@@ -131,10 +132,12 @@ const criarPost = async (req,res)=>{
         }else if(!tipo){
             return res.status(422).json({mensagem:"o campos tipo é obrigatorio!"});
         }
+        const caminhoImg=(req.file.path)
+        let img=caminhoImg.split('src\\')
 
         const post = new Post({
             "tituloPost": titulo,
-            "caminhoImg":req.file.path,
+            "caminhoImg":img[1],
             "textoPost":texto,
             "fk_tipo":tipo,
             "fk_user":req.userId
@@ -172,13 +175,108 @@ const buscaMpost = async (req, res) => {
     }
 }
 
+const buscarPostid = async (req, res) => {
+    try {
+       const {id} = req.params;
+        const posts = await Post.findById(id).populate([
+            {path:'fk_user', select:'perfil'},
+            { path:"fk_tipo",select:"tipoPost"}
+        ]);
+
+        if (!posts || posts.length === 0) {
+            return res.status(404).json({ message: "Nenhum post encontrado" });
+        }
+        
+        return res.status(200).json(posts);
+
+    } catch (error) {
+     
+        console.error(error);
+       
+        return res.status(500).json({ error: "Erro ao buscar posts" });
+    }
+}
+
+const editarPost = async (req,res)=>{
+    try{
+        const {id}=req.params;
+        const{titulo,texto,tipo,image}=req.body;
+        let caminhoImg='';
+        if(!titulo){
+            return res.status(422).json({mensagem:"O campos titulo é obrigatorio!"});
+        }else if(!texto){
+            return res.status(422).json({mensagem:"o campos texto é obrigatorio!"});
+        }else if(!tipo){
+            return res.status(422).json({mensagem:"o campos tipo é obrigatorio!"});
+        }else if(req.file){
+            const caminhoImgs=(req.file.path)
+            const imgs=caminhoImgs.split('src\\')
+            caminhoImg=imgs[1];
+            const post = await Post.findById(id);
+            if (post){
+            const caminhoDaImagem = post.caminhoImg;
+            apagarImg.apagarImagem(caminhoDaImagem);
+            }
+        }else{
+            caminhoImg=image;
+        }
+
+        const postDados={
+            "tituloPost": titulo,
+            "caminhoImg":caminhoImg,
+            "textoPost":texto,
+            "fk_tipo":tipo,
+            "fk_user":req.userId
+        }
+
+        try{
+            const post = await Post.findByIdAndUpdate(id, postDados, { new: true });
+
+            if(post){
+                return res.status(200).json("Post editado com sucesso")
+            }
+           
+        }catch(erro){
+            return res.status(500).json("erro ao cadastra o post na plataforma");
+        } 
+    }catch{ 
+
+    }
+}
+
+const ApagarPost = async (req,res)=>{
+    try{
+        const {id}=req.params;
+        const post = await Post.findById(id);
+        if (post){
+            const caminhoDaImagem = post.caminhoImg;
+            apagarImg.apagarImagem(caminhoDaImagem);
+        }
+        try{
+            const result = await Post.deleteOne({ _id: id })
+        
+            if(result){
+                return res.status(200).json("Post apagado com sucesso")
+            }
+            
+        }catch(erro){
+            return res.status(500).json("erro ao apagar o post na plataforma");
+        } 
+    }catch{ 
+
+    }
+}
+
 
 
 module.exports={
     cadastraUsuario,
     paginaLogin,
     criarPost,
+    buscarPostid,
     verTipo,
     editarPerfil,
-    buscaMpost
+    buscaMpost,
+    editarPost,
+    ApagarPost
 }

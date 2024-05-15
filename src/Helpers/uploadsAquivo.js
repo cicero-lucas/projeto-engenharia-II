@@ -21,11 +21,14 @@ const uploadImg = multer({
     }
 });
 
-function apagarImagem(caminhoDaImagem) {
+function apagarImagem(caminho) {
+    const caminhoDaImagem= `src\\${caminho}`.replace(/\\/g, '\\\\')
+
     if (fs.existsSync(caminhoDaImagem)) {
         fs.unlinkSync(caminhoDaImagem);
-    }
+    } 
+    
 }
 
-
 module.exports = { uploadImg, apagarImagem };
+
