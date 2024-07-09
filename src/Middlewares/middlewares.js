@@ -6,7 +6,7 @@ async function verificarLogin(req, res, next) {
     const headerToken = req.headers.authorization; 
     
     if (!headerToken) {
-        return res.status(401).json({ error: 'Token de autorização ausente' });
+        return res.status(401).json({ error: 'Token de autorização ausente',opc:0  });
     }
 
     const token = headerToken.split(' ')[1]; 
@@ -14,7 +14,7 @@ async function verificarLogin(req, res, next) {
     jwt.verify(token, secret, (err, decoded) => {
         if (err) {
             console.error('Erro ao verificar o token:', err);
-            return res.status(401).json({ error: 'Token inválido' });
+            return res.status(401).json({ error: 'Token inválido',opc:0 });
         } else {
             const decodedToken = jwt.decode(token);
             const id = decodedToken.iduser;

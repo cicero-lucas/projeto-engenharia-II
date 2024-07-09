@@ -9,9 +9,7 @@ const conexaoDb = ()=>{
   mongoose.connect(uri)
   
   .then(()=>{
-
     console.log("banco conectado")
-    
   })
 
   .catch((err)=>console.log(err))

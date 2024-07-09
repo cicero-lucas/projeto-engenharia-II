@@ -7,4 +7,4 @@ const User = mongoose.model('User',{
     senha: String,
 }); 
 
-module.exports=User
+module.exports=User;

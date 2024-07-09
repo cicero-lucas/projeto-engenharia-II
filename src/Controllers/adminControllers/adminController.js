@@ -5,8 +5,12 @@ const verCookie = require("../../Helpers/Helpers")
 const mongoose = require("mongoose");
 const User = require('../../Models/User');
 const tipopost = require('../../Models/tipopost');
+const FavoritarPost = require('../../Models/FavoritarPost');
 const Post = require('../../Models/Post');
-const apagarImg = require('../../Helpers/uploadsAquivo')
+const Cometarios = require("../../Models/CometarioPost")
+const apagarImg = require('../../Helpers/uploadsAquivo');
+
+
 
 const cadastraUsuario = async (req,res)=>{
     try{
@@ -71,7 +75,7 @@ const paginaLogin = async (req,res)=>{
 
         const user = await User.findOne({email:email})
         if(!user){
-            return res.status(404).json({msg:'usuario não cadastrado faça o cadastro'});
+            return res.status(404).json({msg:'usuario não cadastrado faça o cadastro',opc:3});
         }
 
         const checksenha = await bcrypt.compare(senha,user.senha)
@@ -97,6 +101,23 @@ const paginaLogin = async (req,res)=>{
         console.log("erro ao fazer login")
     }
 }
+
+const buscarPerfil = async (req,res) =>{
+    try{
+        const id = req.userId;
+        if(id){
+         const user = await User.findOne({_id:id}).select('-senha');
+         if(user){
+            return res.json(user);
+         }
+        
+        }
+    }catch{
+
+    }
+
+}
+
 
 const editarPerfil = async (req,res)=>{
     // const {perfil}=req.body;
@@ -134,7 +155,6 @@ const criarPost = async (req,res)=>{
         }
         const caminhoImg=(req.file.path)
         let img=caminhoImg.split('src\\')
-
         const post = new Post({
             "tituloPost": titulo,
             "caminhoImg":img[1],
@@ -268,6 +288,145 @@ const ApagarPost = async (req,res)=>{
 }
 
 
+const favoritarPosts = async(req,res)=>{
+    try{
+        const userId= req.userId
+        const {postId}=req.body;
+
+        const novoFavorito = new FavoritarPost({
+            fk_user:userId,
+            fk_post: postId,
+        });
+        await novoFavorito.save();
+        return res.status(200).json({msg:"post Favoritado com sucesso!"})
+    }catch{
+        return res.status(500).json({ message: "Erro ao favoritar post." });
+    }
+}
+
+const verPostfavoritos = async(req,res)=>{
+    try{
+        const {userId}=req.body;
+        const postFavorito = await FavoritarPost.find({fk_user:userId}).populate('fk_post');
+
+        if (!postFavorito || postFavorito.length === 0) {
+            return res.status(404).json({ message: "Nenhum post favoritado" });
+        }
+        return res.status(200).json(postFavorito);
+        res.status(200).json({msg:"post Favoritado com sucesso!"})
+    }catch{
+        res.status(500).json({ message: "Erro ao favoritar post." });
+    }
+}
+
+
+const criarComentario = async (req, res) => 
+    {
+    try {
+        const userId= req.userId
+        const { comentario, fk_post } = req.body;
+        const novoComentario = new Cometarios({
+            comentario,
+            fk_user:userId,
+            fk_post
+        });
+
+        const comentarioSalvo = await novoComentario.save();
+
+        res.status(201).json(comentarioSalvo);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao criar comentário", error: error.message });
+    }
+};
+
+const editarComentario = async (req, res) => {
+    try {
+        const { comentarioId } = req.params;
+        const { comentario } = req.body;
+        const usuarioLogadoId = req.userId; // ID do usuário logado extraído do token
+
+        // Verifica se o ID do comentário é válido
+        if (!mongoose.Types.ObjectId.isValid(comentarioId)) {
+            return res.status(404).json({ message: "ID de comentário inválido" });
+        }
+
+        // Busca o comentário pelo ID
+        const comentarioExistente = await Cometarios.findById(comentarioId);
+
+        // Verifica se o comentário existe
+        if (!comentarioExistente) {
+            return res.status(404).json({ message: "Comentário não encontrado" });
+        }
+
+        // Verifica se o usuário logado é o autor do comentário
+        if (comentarioExistente.fk_user.toString() !== usuarioLogadoId.toString()) {
+            return res.status(403).json({ message: "Você não tem permissão para editar este comentário" });
+        }
+
+        // Atualiza o comentário
+        const comentarioAtualizado = await Cometarios.findByIdAndUpdate(comentarioId, { comentario }, { new: true });
+
+        // Retorna o comentário atualizado
+        res.status(200).json(comentarioAtualizado);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao editar comentário", error: error.message });
+    }
+};
+
+
+const deletarComentario = async (req, res) => {
+    try {
+        const { comentarioId } = req.params;
+        const usuarioLogadoId = req.userId; // ID do usuário logado extraído do token
+
+        // Verifica se o ID do comentário é válido
+        if (!mongoose.Types.ObjectId.isValid(comentarioId)) {
+            return res.status(404).json({ message: "ID de comentário inválido" });
+        }
+
+        // Busca o comentário pelo ID
+        const comentarioExistente = await Cometarios.findById(comentarioId);
+
+        // Verifica se o comentário existe
+        if (!comentarioExistente) {
+            return res.status(404).json({ message: "Comentário não encontrado" });
+        }
+
+        // Verifica se o usuário logado é o autor do comentário
+        if (comentarioExistente.fk_user.toString() !== usuarioLogadoId.toString()) {
+            return res.status(403).json({ message: "Você não tem permissão para deletar este comentário" });
+        }
+
+        // Deleta o comentário
+        await Cometarios.findByIdAndDelete(comentarioId);
+
+        res.status(200).json({ message: "Comentário deletado com sucesso" });
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao deletar comentário", error: error.message });
+    }
+};
+
+ const me = async (req, res) => {
+    try {
+        const idUser = req.userId 
+        const user = await User.findById(idUser).select(['-senha','-email']); 
+
+        if (!user) {
+            return res.status(404).json({ message: 'Usuário não encontrado' });
+        }
+
+        res.json(user);
+    } catch (error) {
+        console.error('Erro ao obter informações do usuário:', error);
+        res.status(500).json({ message: 'Erro interno ao obter informações do usuário' });
+    }
+}
+
+
+
+
+
+
 
 module.exports={
     cadastraUsuario,
@@ -278,5 +437,12 @@ module.exports={
     editarPerfil,
     buscaMpost,
     editarPost,
-    ApagarPost
+    ApagarPost,
+    buscarPerfil,
+    favoritarPosts,
+    verPostfavoritos,
+    criarComentario,
+    editarComentario,
+    deletarComentario,
+    me
 }

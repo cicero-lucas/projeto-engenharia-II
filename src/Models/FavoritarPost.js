@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 
-const fPost = mongoose.Schema({
+const fPostSchema =  new mongoose.Schema({
     fk_user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     fk_post:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Post'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'
     }
-})
+});
 
-const favoritarPost= mongoose.model('postFavorito',fPost);
+const FavoritarPost = mongoose.model('PostsFavoritos', fPostSchema);
 
-module.exports=favoritarPost
+module.exports= FavoritarPost;
