@@ -8,10 +8,13 @@ const path = require("path");
 const session = require('express-session');
 const flash = require('connect-flash');
 
+
 const app = express();
 
+const secret=process.env.SECRET2
+
 app.use(session({
-    secret: '12KSKDA2102O20ao11191msawenjenq',
+    secret:secret,
     resave: false,
     saveUninitialized: true,
   }));
@@ -30,7 +33,11 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use(Rota);
 
-conexaoDb();
+try{
+    conexaoDb();
+}catch{
+    console.log("Erro na conexão com banco!")
+}
 
 app.listen(process.env.PORT,()=>{
     console.log("server porta",process.env.PORT)
