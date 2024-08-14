@@ -19,6 +19,7 @@ Rota.get('/categoria/hadware',siteControle.categoriaHadware);
 Rota.get('/categoria/ia',siteControle.categoriaIa);
 
 Rota.post('/buscar/posts',siteControle.buscarPost);
+
 Rota.get('/ver/posts',siteControle.verTodosPost);
 
 Rota.post('/post/comentarios/criar',middleware.verificarLogin,adminControle.criarComentario);
