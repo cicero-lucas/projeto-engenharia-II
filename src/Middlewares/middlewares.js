@@ -9,7 +9,7 @@ async function verificarLogin(req, res, next) {
         return res.status(401).json({ error: 'Token de autorização ausente',opc:0  });
     }
 
-    const token = headerToken.split(' ')[1]; 
+    const token = headerToken.split(' ')[1];  
 
     jwt.verify(token, secret, (err, decoded) => {
         if (err) {
