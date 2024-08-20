@@ -5,8 +5,7 @@
 
 <h2> Titlulo:  </h2>
 
-
-Atividade 02 web II
+Projeto engenharia de software II
 
 ***
 
@@ -108,9 +107,9 @@ npm run dev
 
 🤝 Colaboradores
  <ul>
-      <li>Cicero Lucas: </li> 
-      <li>Dayanne: </li> 
-      <li>Rosemelry: </li> 
+<!--       <li>Cicero Lucas: </li> 
+      <li></li> 
+      <li>Rosemelry: </li>  -->
     </ul>
 
 
