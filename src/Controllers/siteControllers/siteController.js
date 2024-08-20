@@ -39,7 +39,7 @@ const verPostId= async(req,res)=>{
         }
 
         return res.status(200).json(verPost);
-        
+       
     } catch (error) {
         console.error(error);
        
