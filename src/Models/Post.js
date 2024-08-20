@@ -4,7 +4,7 @@ const postSchema = new mongoose.Schema({
     tituloPost: String,
     caminhoImg: String,
     textoPost: String,
-    dataCadastro: { type: Date, default: Date.now },
+    dataCadastro: { type: Date, default: Date.now }, 
     numeroLike: { type: Number, default: 0 },
     numeroDeslike: { type: Number, default: 0 },
     fk_tipo:{

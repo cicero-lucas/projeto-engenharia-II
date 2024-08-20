@@ -4,7 +4,7 @@ const comentariosSchema = new mongoose.Schema({
     comentario: String,
     dataCadastro: { type: Date, default: Date.now },
     numeroLike: { type: Number, default: 0 },
-    numeroDeslike: { type: Number, default: 0 },
+    numeroDeslike: { type: Number, default: 0 }, 
     fk_user:{
         type: mongoose.Schema.Types.ObjectId,
         ref:'User'
