@@ -32,3 +32,5 @@ function apagarImagem(caminho) {
 
 module.exports = { uploadImg, apagarImagem };
 
+
+
