@@ -1,0 +1,23 @@
+
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./src/Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env # Caminho relativo ao arquivo .env
+    restart: always
+    networks:
+      - app-teste
+    volumes:
+      - .:/usr/src/app
+
+    working_dir: /usr/src/app
+    command: ["npm", "run", "dev"]
+  
+networks:
+  app-teste:
+    driver: bridge

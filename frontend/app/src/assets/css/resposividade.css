@@ -1,0 +1,331 @@
+@media only screen and (max-width: 800px) {
+    header {
+        height: 16vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .caixaLink {
+        display: none;
+        width: 100%;
+        margin: 10px auto;
+    }
+    
+
+    .caixaMenu input[type="checkbox"]:checked ~ .menu {
+        transform: translateX(-8rem);
+    }
+
+    .menu {
+        width: 280px;
+        background-color:#c2c2c2d4;
+        padding: 5px;
+        margin-top: 5px;
+        border-radius: 4px;
+        display: block;
+        transform: translateX(-600px);
+        transition: all 1s ease-in-out;
+        position: absolute;
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    .main {
+        display: block;
+        width: 100%;
+        margin: 10px auto;
+    }
+
+    .caixaLateral {
+        display: block;
+        width: 100%;
+        margin: 1rem auto;
+        text-align: center;
+    }
+
+    .pcategoria {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .caixaLogin {
+        width: 100%;
+        margin: 2.4rem auto;
+        display: block;
+    }
+
+    .caixaLimg {
+        width: 250px;
+        height: 250px;
+        margin: 1%;
+        margin: 10px auto;
+        background-color: aliceblue;
+        border-radius: 50%;
+    }
+
+    .caixaLimg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin: 10px auto;
+        border-radius: 50%;
+    }
+
+    .caixaForm {
+        width: 90%;
+        margin: auto;
+        text-align: center;
+    }
+
+    .mainAdm {
+        width: 100%;
+        display: block;
+    }
+
+    .caixaAlink {
+        display: none;
+    }
+
+    .meusPosts {
+        display: block;
+        margin: auto;
+        text-align: center;
+        width: 100%;
+        max-height: 400px; /* Definindo altura máxima para a tabela */
+        overflow-y: auto; /* Adicionando scroll vertical se necessário */
+    }
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: calc(50% - 20px);
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    .tdAcao {
+        background-color: #eef4f8;
+        display: flex;
+        justify-content:space-around;
+        align-items: center;
+    }
+
+   
+    .btnEditar{
+        width: 100px;
+        height: 40px;
+        border: none;
+        background-color: #80d0fe;
+        margin: 2px 35px;
+        border-radius: 10px;
+        transition: 1 ease-in-out;
+        cursor: pointer;
+    }
+    .btnApagar{
+        width: 100px;
+        height: 40px;
+        border: none;
+        background-color: #80d0fe;
+        margin: 2px 35px;
+        border-radius: 10px;
+        transition: 1 ease-in-out;
+        cursor: pointer;
+    }
+
+    .btnEditar:hover,
+    .btnApagar:hover {
+        border: 1px solid black;
+        background-color: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.085);
+}
+}
+
+@media only screen and (min-width: 801px) and (max-width: 890px) {
+    header {
+        height: 15vh;
+    }
+
+    .caixaLink {
+        margin: -3px;
+        position: absolute;
+        right: 40px;
+    }
+
+    .caixaLogin {
+        width: 100%;
+        margin: 2.4rem auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .caixaLimg {
+        flex: 50%;
+        height: 500px;
+        margin: 1%;
+    }
+
+    .caixaLimg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin: 10px auto;
+    }
+
+    .caixaForm {
+        flex: 45%;
+        margin: 1% 1%;
+    }
+
+    .mainAdm {
+        width: 100%;
+        display: block;
+    }
+
+    .caixaAlink {
+        display: none;
+    }
+
+    .meusPosts {
+        display: block;
+        margin: auto;
+        text-align: center;
+        width: 100%;
+        max-height: 400px; /* Definindo altura máxima para a tabela */
+        overflow-y: auto; /* Adicionando scroll vertical se necessário */
+    }
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: calc(50% - 20px);
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    .tdAcao {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    a .btnEditar
+    a .btnApagar {
+       margin-left: 20px;
+       margin-left: 20px;
+       display:none;
+    }
+
+    .btnEditar:hover,
+    .btnApagar:hover {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .tdAcao {
+        background-color: #eef4f8;
+        display: flex;
+        justify-content:space-around;
+        align-items: center;
+    }
+
+   
+    .btnEditar{
+        width: 100px;
+        height: 40px;
+        border: none;
+        background-color: #80d0fe;
+        margin: 2px 35px;
+        border-radius: 10px;
+        transition: 1 ease-in-out;
+        cursor: pointer;
+    }
+    .btnApagar{
+        width: 100px;
+        height: 40px;
+        border: none;
+        background-color: #80d0fe;
+        margin: 2px 35px;
+        border-radius: 10px;
+        transition: 1 ease-in-out;
+        cursor: pointer;
+    }
+
+    .btnEditar:hover,
+    .btnApagar:hover {
+        border: 1px solid black;
+        background-color: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.085);
+}
+}
+
