@@ -12,7 +12,7 @@ const conexaoDb = ()=>{
     console.log("banco conectado")
   })
 
-  .catch((err)=>console.log(err))
+  .catch((err)=> console.log("erro! na conexão do banco de dados"))
 }
 
 module.exports=conexaoDb
