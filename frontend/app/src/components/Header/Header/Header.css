@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --font-titulo: "Poppins", sans-serif;
+    --font-texto: "Roboto", sans-serif;
+    --color-btn: #8ab8d3;
+}
+
+
+/* header */
+header {
+    background-color: white;
+    height: 10vh;
+    padding: 1rem;
+    padding-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 45px;
+    font-family: var(--font-titulo);
+}
+
+header p.titulo {
+    font-size: 23px;
+    font-weight: bolder;
+    margin-left: 30px;
+    color: #495057;
+}
+
+.caixaMenu {
+    height: 40px;
+    width: 40px;
+}
+
+.caixaMenu .caixaLabel label span {
+    background-color: #cccccc4a;
+    padding: 6px;
+    border-radius: 100%;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.caixaMenu .caixaLabel label span:hover {
+    background-color: #cccccc08;
+    transition: 0.4s ease-in-out;
+}
+
+.caixaMenu input[type="checkbox"] {
+    display: none;
+}
+
+.menu {
+    width: 280px;
+    background-color: #cccccc;
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 4px;
+    display: block;
+    transform: translateX(-400px);
+    transition: all 1s ease-in-out;
+    position: absolute;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.menu nav a{
+    display: block;
+    margin: auto;
+    margin: 10px 0px;
+    padding: 10px;
+    text-decoration: none;
+    font-family: var(--font-texto);
+    color: black;
+}
+.menu nav a:hover{
+    border-bottom: 1px solid #495057;
+    color: #495057;
+}
+
+.menu nav button{
+ background-color: #dd4141;
+ display: block;
+ margin: 10px auto;
+ width: 50%;
+ height: 35px;
+ border-radius: 10px;
+ border: none;
+ font-family: var(--font-texto);
+ font-weight: 400;
+ color: white;
+}
+.menu nav button:hover{
+ background-color: #fe4545;
+ 
+}
+
+.caixaMenu input[type="checkbox"]:checked ~ .menu {
+    transform: translateX(0);
+}
+
+.caixaLink {
+    margin: -3px;
+    position: absolute;
+    right: 185px;
+}
+
+.caixaLink a {
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    color: #495057;
+    font-size: 1rem;
+}
+
+.caixaLink .btnLogin {
+    border: none;
+    background-color: #8ab8d3;
+    color: white;
+    padding: 10px;
+    border-radius: 13px;
+    width: 70px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.caixaLink .btnLogin:hover {
+    background-color: #c3e9ff;
+    color: #636363;
+    transition: 0.5s;
+}
+

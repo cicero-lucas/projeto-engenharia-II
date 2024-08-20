@@ -5,3 +5,5 @@ const tipopost = mongoose.model('tipopost',{
 });
 
 module.exports=tipopost
+
+

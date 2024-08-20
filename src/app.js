@@ -29,6 +29,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
+
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use(Rota);

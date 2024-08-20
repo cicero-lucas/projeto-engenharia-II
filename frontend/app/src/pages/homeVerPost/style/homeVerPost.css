@@ -1,0 +1,231 @@
+/* Estilo para a caixa que envolve todo o conteúdo */
+.caixaVpost {
+    width: 95%;
+    margin: 1rem auto;
+    overflow: hidden;
+    max-width: 2000px; /* Largura máxima permitida */
+}
+
+/* Estilo para a caixa que contém a imagem e o título */
+.caixaImgVpost {
+    background-color: rgba(214, 221, 221, 0.112);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column; /* Organiza a imagem e o título em coluna */
+    align-items: center; /* Centraliza na horizontal */
+    justify-content: center; /* Centraliza na vertical */
+    padding: 1rem;
+}
+
+.caixaImgVpost img {
+    width: 100%; /* A imagem ocupa toda a largura da caixa */
+    max-height: 400px; /* Altura máxima da imagem */
+    object-fit: cover; /* Garante que a imagem cubra todo o espaço disponível */
+    border-radius: 5px;
+}
+
+.Vtitulo {
+    width: 100%;
+    color: #3c3a3a;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    margin-top: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.Vtitulo p {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    text-transform: capitalize;
+    font-size: 21px; /* Tamanho do texto do título */
+    margin: 0; /* Remove margem padrão do parágrafo */
+}
+
+/* Estilo para o texto do post */
+.Vtexto {
+    width: 95%;
+    font-family: "Roboto", sans-serif;
+    font-size: 15px;
+    text-align: justify;
+    margin: 1rem auto;
+    border-left: 1.6px dotted rgba(0, 0, 0, 0.548);
+    padding-left: 2rem;
+}
+
+.caixaAcao {
+    width: 90%;
+    display: flex;
+    justify-content: flex-end; /* Ajustado para flex-end para dispositivos menores */
+    align-items: center;
+    margin-top: 20px;
+}
+
+.favoritar,
+.like,
+.deslike {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.favoritar:hover,
+.like:hover,
+.deslike:hover,
+.material-symbols-outlined:hover {
+    color: #ff69b4; /* Cor para hover */
+}
+
+.favoritado {
+    color: #ff0000 !important; /* Cor vermelha para favoritado */
+}
+
+.like.liked,
+.deslike.disliked {
+    color: #007bff; /* Cor azul para liked e disliked */
+}
+
+.material-symbols-outlined {
+    margin-right: 5px;
+}
+
+.numeroLD {
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.comentarios {
+    background-color: #cecaca24;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 2rem auto;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.comentarios h3 {
+    margin: 15px 1rem;
+    font-family: "Roboto", sans-serif;
+    border-left: 2px dotted black;
+    padding-left: 10px;
+}
+
+.adicionarComentario {
+    margin: 0.5rem auto;
+    
+}
+
+.listaComentarios {
+    margin-top: 10px;
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.comentario {
+    background-color: #ffffffbf;
+    margin: 1rem 2rem;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-left: 2px dotted black;
+    padding-left: 10px;
+}
+
+.comentario:hover {
+    background-color: #f0f0f0;
+}
+
+.comentario p {
+    margin: 5px 0;
+}
+
+.comentario span {
+    font-size: 12px;
+    color: #777;
+}
+
+.comentarioAcoes {
+    margin-top: 10px;
+}
+
+.comentarioAcoes button {
+    margin-right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.comentarioAcoes button:hover {
+    color: #ff69b4;
+}
+
+.editarComentario {
+    margin-top: 10px;
+}
+
+.editarComentario textarea {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 5px;
+}
+
+.editarComentario button {
+    margin-right: 10px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+    @media (max-width: 700px) {
+        /* Ajuste para telas menores que 700px de largura */
+        .caixaImgVpost {
+            flex-direction: column; /* Altera para coluna para empilhar imagem e título */
+            align-items: center; /* Centraliza na horizontal */
+        }
+    
+        .caixaImgVpost img {
+            width: 100%; /* A imagem ocupa toda a largura disponível */
+            max-height: none; /* Remove a altura máxima para ocupar o espaço disponível */
+            border-radius: 5px;
+        }
+    
+        .Vtitulo {
+            margin-top: 0.5rem; /* Reduz o espaçamento superior */
+        }
+    
+        .caixaAcao {
+            flex-direction: column; /* Empilha as ações verticalmente */
+            align-items: flex-start; /* Alinha as ações à esquerda */
+        }
+    
+        .favoritar,
+        .like,
+        .deslike {
+            font-size: 12px; /* Reduz o tamanho do texto das ações */
+        }
+    
+        .numeroLD {
+            font-size: 14px; /* Reduz o tamanho do número de likes e dislikes */
+        }
+    
+        .comentarios {
+            margin: 1rem auto;
+        }
+    }
+    
+    @media (max-width: 400px) {
+        /* Ajuste para telas menores que 400px de largura */
+        .Vtitulo p {
+            font-size: 18px; /* Reduz o tamanho do texto do título */
+        }
+    
+        .Vtexto {
+            font-size: 14px; /* Reduz o tamanho do texto do post */
+            padding-left: 1rem; /* Reduz o recuo do texto */
+        }
+    }
+    

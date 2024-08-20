@@ -1,0 +1,12 @@
+.caixaPaginacao a {
+    color: rgba(0, 0, 0, 0.31);
+    text-decoration: none; 
+    transition: color 0.3s; 
+  }
+  
+  .caixaPaginacao a.selected {
+    color: #000000f9; 
+    font-weight: 510;
+    border-bottom: 2px solid #000000f9;
+  }
+  
