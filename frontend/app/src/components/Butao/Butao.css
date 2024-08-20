@@ -1,0 +1,25 @@
+.bnt{
+    display: block;
+    margin: 1rem auto;
+}
+.bnt a{
+    text-decoration: none;
+}
+
+.bnt button{
+    display: block;
+    margin: auto;
+    padding: 5px;
+    height: 38px;
+    background:  #8ab8d3;
+    border: none;
+    border-radius: 10px;
+    width: 125px;
+    color: white;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+}
+.bnt button:hover{
+    background-color: #80d0fe;
+}
