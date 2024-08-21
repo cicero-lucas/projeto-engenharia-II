@@ -2,16 +2,14 @@
 
 services:
   backend:
-    build:
-      context: .
-      dockerfile: ./src/Dockerfile
+    image: backimg
     ports:
       - "3000:3000"
     env_file:
-      - ./.env # Caminho relativo ao arquivo .env
+      - ./.env 
     restart: always
     networks:
-      - app-teste
+      - back-teste
     volumes:
       - .:/usr/src/app
 
@@ -19,5 +17,5 @@ services:
     command: ["npm", "run", "dev"]
   
 networks:
-  app-teste:
+  back-teste:
     driver: bridge
