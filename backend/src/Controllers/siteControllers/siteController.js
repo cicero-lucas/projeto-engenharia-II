@@ -3,6 +3,7 @@ const tipopost = require("../../Models/tipopost");
 const Comentarios = require('../../Models/CometarioPost'); 
 const mongoose = require("mongoose");
 
+
 const verTodosPost = async (req, res) => {
     try {
 
