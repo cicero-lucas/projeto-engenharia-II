@@ -141,37 +141,51 @@ const verTipo = async (req,res) =>{
     }
 }
 
-const criarPost = async (req,res)=>{
-    try{
-    
-        const{titulo,texto,tipo}=req.body;
+const criarPost = async (req, res) => {
+    try {
+        const { titulo, texto, tipo } = req.body;
 
-        if(!titulo){
-            return res.status(422).json({mensagem:"O campos titulo é obrigatorio!"});
-        }else if(!texto){
-            return res.status(422).json({mensagem:"o campos texto é obrigatorio!"});
-        }else if(!tipo){
-            return res.status(422).json({mensagem:"o campos tipo é obrigatorio!"});
+        // Verificação de campos obrigatórios
+        if (!titulo) {
+            return res.status(422).json({ mensagem: "O campo título é obrigatório!" });
+        } else if (!texto) {
+            return res.status(422).json({ mensagem: "O campo texto é obrigatório!" });
+        } else if (!tipo) {
+            return res.status(422).json({ mensagem: "O campo tipo é obrigatório!" });
         }
-        const caminhoImg=(req.file.path)
-        let img=caminhoImg.split('src\\')
+
+        // Verifica se existe uma imagem enviada
+        let caminhoImg;
+        if (req.file && req.file.path) {
+            caminhoImg = req.file.path;
+        } else {
+            // Importa a imagem padrão
+            caminhoImg = "src\\public/sever/apresentacao.png"; // Caminho da imagem padrão
+        }
+
+        // Ajuste do caminho da imagem
+        let img = caminhoImg.split('src\\');
+       
+
         const post = new Post({
             "tituloPost": titulo,
-            "caminhoImg":img[1],
-            "textoPost":texto,
-            "fk_tipo":tipo,
-            "fk_user":req.userId
-        })
-        try{
-            await post.save();
-            return res.status(200).json("post casastrado com sucesso")
-        }catch(erro){
-            return res.status(500).json("erro ao cadastra o post na plataforma");
-        }  
-    }catch{ 
+            "caminhoImg": img[1], // Salva o caminho relativo da imagem
+            "textoPost": texto,
+            "fk_tipo": tipo,
+            "fk_user": req.userId
+        });
 
+        try {
+            await post.save();
+            return res.status(200).json("Post cadastrado com sucesso");
+        } catch (erro) {
+            return res.status(500).json("Erro ao cadastrar o post na plataforma");
+        }
+    } catch (erro) {
+        return res.status(500).json("Erro ao processar a requisição");
     }
-}
+};
+
 
 const buscaMpost = async (req, res) => {
     try {

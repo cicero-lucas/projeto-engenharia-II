@@ -6,6 +6,7 @@ import UrlImg from '../../helpers/imagem';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from "../../components/Footer";
+import imageC from "../../assets/imagem/tarefa.png";
 
 export default function EditarPost() {
     const { id } = useParams();
@@ -80,39 +81,44 @@ export default function EditarPost() {
     return (
         <>
             <Header titulo={"Editar Post"}></Header>
-            <div className="caixaFormA">
-                <form onSubmit={criarPost} encType="multipart/form-data">
-                    <div className="camposAI">
-                        <img src={img} alt="Imagem atual" />
-                    </div>
+            <div className="caixaLogin">
+                <div className="caixaLimg">
+                    <img src={imageC} alt="login" style={{objectFit:"contain"}} />
+                </div>
+                <div className="caixaFormA">
+                    <form onSubmit={criarPost} encType="multipart/form-data">
+                        <div className="camposAI">
+                            <img src={img} alt="Imagem atual" />
+                        </div>
 
-                    <div className="camposA">
-                        <input type="file" name='image' onChange={handlefile} />
-                    </div>
+                        <div className="camposA">
+                            <input type="file" name='image' onChange={handlefile} />
+                        </div>
 
-                    <div className="camposA">
-                        <input type="text" name="titulo" id="ititulo" placeholder="Digite o titulo:" onChange={(el) => setPost({ ...post, titulo: el.target.value })} value={post.titulo} />
-                    </div>
+                        <div className="camposA">
+                            <input type="text" name="titulo" id="ititulo" placeholder="Digite o titulo:" onChange={(el) => setPost({ ...post, titulo: el.target.value })} value={post.titulo} />
+                        </div>
 
-                    <div className="camposA">
-                        <textarea name="texto" id="itexto" placeholder="Digite o texto:" onChange={(el) => setPost({ ...post, texto: el.target.value })} value={post.texto}></textarea>
-                    </div>
+                        <div className="camposA">
+                            <textarea name="texto" id="itexto" placeholder="Digite o texto:" onChange={(el) => setPost({ ...post, texto: el.target.value })} value={post.texto}></textarea>
+                        </div>
 
-                    <div className="camposA">
-                        {categoria.length > 0
-                            ? <select name="tipo" id="itipo" onChange={(el) => setPost({ ...post, tipo: el.target.value })} value={post.tipo}>
-                                {categoria.map((el, index) => (
-                                    <option key={index} value={el._id}>{el.tipoPost}</option>
-                                ))}
-                            </select>
-                            : <p>sem tipo</p>
-                        }
-                    </div>
+                        <div className="camposA">
+                            {categoria.length > 0
+                                ? <select name="tipo" id="itipo" onChange={(el) => setPost({ ...post, tipo: el.target.value })} value={post.tipo}>
+                                    {categoria.map((el, index) => (
+                                        <option key={index} value={el._id}>{el.tipoPost}</option>
+                                    ))}
+                                </select>
+                                : <p>sem tipo</p>
+                            }
+                        </div>
 
-                    <div className="camposA">
-                        <button type="submit">Editar Post</button>
-                    </div>
-                </form>
+                        <div className="camposA">
+                            <button type="submit">Editar Post</button>
+                        </div>
+                    </form>
+                </div>
             </div>
             <Footer></Footer>
         </>
