@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import UrlImg from "../../helpers/imagem";
-import semPost from "../../assets/imagem/tarefa.png"
+import semPost from "../../assets/imagem/tarefa.png";
 import verificarToken from "../../middleware/middleware";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Quill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; 
 
-export default function Posts({url}){
+export default function Posts({url}) {
     const navigate = useNavigate(); 
     const [posts, setPosts] = useState([]);
     const [frase, setFrase] = useState('');
@@ -16,7 +17,7 @@ export default function Posts({url}){
     const [likesDados, setLikesDados] = useState({});
 
     function novosPosts() {
-        console.log(url)
+        console.log(url);
         fetch(url, {
             method: 'GET'
         })
@@ -66,7 +67,6 @@ export default function Posts({url}){
     };
 
     const darLike = (idPost) => {
-
         if (likesDados[idPost]?.liked) {
             return; 
         }
@@ -137,55 +137,59 @@ export default function Posts({url}){
     const isDisliked = (idPost) => {
         return likesDados[idPost]?.disliked;
     };
-    return(
-        <>
-             <div className="listaPost">
-                    {posts.length > 0 ? (
-                        <div className="caixaPost">
-                            {posts.map((el, index) => (
-                                <div className="post" key={index}>
-                                    <div className="postImg">
-                                        <img src={UrlImg(`${el.caminhoImg}`)} alt={el.caminhoImg} />
-                                    </div>
-                                    <a href={`/ver/post/${el._id}`} className="posts">
-                                        <div className="caixaP">
-                                            <div className="postDados">
-                                                <p className="nomeP">
-                                                    {el.fk_user && el.fk_user.perfil ? el.fk_user.perfil : 'autor não especificado'}
-                                                </p>
-                                                <p className="dataP">{new Date(el.dataCadastro).toLocaleDateString()}</p>
-                                            </div>
-                                            <div className="postTitulo">
-                                                <p>{el.tituloPost}</p>
-                                            </div>
-                                            <div className="postTexto">
-                                                <p>{el.textoPost} </p>
-                                            </div>
-                                        </div>
-                                    </a>
 
-                                    <div className="caixaAcao">
-                                        <p onClick={() => favoritarPost(el._id)} className={`favoritar ${isFavoritado(el._id) ? 'favoritado' : ''}`}>
-                                            <span className="material-symbols-outlined">favorite</span>favoritar
-                                        </p>
-                                        <p className={`like ${isLiked(el._id) ? 'liked' : ''}`} onClick={() => darLike(el._id)}>
-                                            <span className="material-symbols-outlined">thumb_up</span>like <span className="numeroLD">{el.numeroLike}</span>
-                                        </p>
-                                        <p className={`deslike ${isDisliked(el._id) ? 'disliked' : ''}`} onClick={() => desLike(el._id)}>
-                                            <span className="material-symbols-outlined">thumb_down</span>deslike <span className="numeroLD">{el.numeroDeslike}</span>
-                                        </p>
-                                    </div>
+    return (
+        <>
+            <div className="listaPost">
+                {posts.length > 0 ? (
+                    <div className="caixaPost">
+                        {posts.map((el, index) => (
+                            <div className="post" key={index}>
+                                <div className="postImg">
+                                    <img src={UrlImg(`${el.caminhoImg}`)} alt={el.caminhoImg} />
                                 </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="semPost">
-                            <img src={semPost} alt="semPost" />
-                            <p className='sPost'>Sem Posts no momento recaregue a pagina</p>
-                        </div>
-                    )}
-                </div>
-                <ToastContainer/>
+                                <a href={`/ver/post/${el._id}`} className="posts">
+                                    <div className="caixaP">
+                                        <div className="postDados">
+                                            <p className="nomeP">
+                                                {el.fk_user && el.fk_user.perfil ? el.fk_user.perfil : 'autor não especificado'}
+                                            </p>
+                                            <p className="dataP">{new Date(el.dataCadastro).toLocaleDateString()}</p>
+                                        </div>
+                                        <div className="postTitulo">
+                                            <p>{el.tituloPost}</p>
+                                        </div>
+                                        <div className="postTexto">
+                                            <Quill  className="quillClasee"
+                                                value={el.textoPost}
+                                                readOnly
+                                                modules={{ toolbar: false }} 
+                                            />
+                                        </div>
+                                    </div>
+                                </a>
+                                <div className="caixaAcao">
+                                    <p onClick={() => favoritarPost(el._id)} className={`favoritar ${isFavoritado(el._id) ? 'favoritado' : ''}`}>
+                                        <span className="material-symbols-outlined">favorite</span>favoritar
+                                    </p>
+                                    <p className={`like ${isLiked(el._id) ? 'liked' : ''}`} onClick={() => darLike(el._id)}>
+                                        <span className="material-symbols-outlined">thumb_up</span>like <span className="numeroLD">{el.numeroLike}</span>
+                                    </p>
+                                    <p className={`deslike ${isDisliked(el._id) ? 'disliked' : ''}`} onClick={() => desLike(el._id)}>
+                                        <span className="material-symbols-outlined">thumb_down</span>deslike <span className="numeroLD">{el.numeroDeslike}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="semPost">
+                        <img src={semPost} alt="semPost" />
+                        <p className='sPost'>Sem Posts no momento recaregue a pagina</p>
+                    </div>
+                )}
+            </div>
+            <ToastContainer/>
         </>
     );
 }

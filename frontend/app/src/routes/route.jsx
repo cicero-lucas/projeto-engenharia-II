@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Home from '../pages/Home/Home';
 import Login from '../pages/Login/Login';
 import Cadastro from '../pages/Cadastro/Cadastro';
-import BuscarPosts from '../pages/buscarPosts/BuscarPosts';
 import RotaPrivada from './RotaPrivada';
 import PaginaAdmin from '../pages/PaginaAdmin/paginaAdmin';
 import CriarPost from '../pages/criarPost/criarPost';
@@ -12,9 +11,9 @@ import CategoriaPosts from '../pages/categoriaPosts/categoriaPosts';
 import EditarPost from '../pages/editarPost/editarPost';
 import DeletarPost from '../pages/deletarPost/deletarPost';
 import PaginaPerfil from '../pages/paginaPerfil/PaginaPerfil';
-import homeVerPost from '../pages/homeVerPost/homeVerPost';
 import HomeVerPost from '../pages/homeVerPost/homeVerPost';
 import SearchResults from '../components/SearchResults/SearchResults';
+import Favoritos from '../pages/favoritos/favoritos';
 
 const Rotas = () => (
   <Router>
@@ -59,13 +58,19 @@ const Rotas = () => (
           <DeletarPost />
         </RotaPrivada>
       } />
-      <Route path='/admin/ver/favoritos/:id' element={
+      <Route path='/admin/ver/favoritos' element={
         <RotaPrivada>
-          <PaginaAdmin />
+          <Favoritos />
         </RotaPrivada>
       } />
 
       <Route path='/admin/pagina/perfil' element={
+        <RotaPrivada>
+          <PaginaPerfil />
+        </RotaPrivada>
+      } />
+      
+      <Route path='/admin/favoritos/:id' element={
         <RotaPrivada>
           <PaginaPerfil />
         </RotaPrivada>
