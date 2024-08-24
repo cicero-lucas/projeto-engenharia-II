@@ -9,6 +9,8 @@ import Busca from "../../components/buscar/buscar";
 import Posts from "../../components/posts/posts";
 import Paginacao from "../../components/paginacao/paginacao";
 import LinkCategoria from "../../components/linkCategoria/linkCategoria";
+
+
 export default function Home() {
 
     const navigate = useNavigate(); 
@@ -30,3 +32,4 @@ export default function Home() {
         </>
     );
 }
+

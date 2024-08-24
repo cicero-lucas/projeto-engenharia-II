@@ -43,3 +43,7 @@ margin-left: 10px;
 .material-symbols-outlined {
     margin-right: 5px;
 }
+
+.ql-editor {
+    border: none; /* Remove a borda ao redor do editor */
+}

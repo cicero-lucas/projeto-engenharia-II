@@ -5,6 +5,9 @@ import UrlImg from "../../helpers/imagem";
 import Footer from '../../components/Footer';
 import './style/homeVerPost.css';
 import verificarToken from '../../middleware/middleware';
+import Quill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Importar o CSS do Quill
+
 
 export default function HomeVerPost() {
     const { id } = useParams();
@@ -17,37 +20,38 @@ export default function HomeVerPost() {
     const [novoComentario, setNovoComentario] = useState('');
     const [mostrarTextArea, setMostrarTextArea] = useState(false);
     const [comentarioEditando, setComentarioEditando] = useState(null);
-    const [atualizarComentarios, setAtualizarComentarios] = useState(false); 
-    const [comentarioSelecionado, setComentarioSelecionado] = useState(null); 
-    const [usuarioLogado, setUsuarioLogado] = useState(null); 
-    
+    const [atualizarComentarios, setAtualizarComentarios] = useState(false);
+    const [comentarioSelecionado, setComentarioSelecionado] = useState(null);
+    const [usuarioLogado, setUsuarioLogado] = useState(null);
+
+
     const token = verificarToken();
 
-    const verifcarLogin=()=>{
+    const verifcarLogin = () => {
         if (!token) {
             navigate('/login');
             return;
-        }else{
+        } else {
 
-        fetch('http://localhost:3000/me', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(res => res.json())
-            .then(user => {
-                setUsuarioLogado(user);
+            fetch('http://localhost:3000/me', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
-            .catch(error => {
-                console.error('Erro ao obter informações do usuário:', error);
-            });
+                .then(res => res.json())
+                .then(user => {
+                    setUsuarioLogado(user);
+                })
+                .catch(error => {
+                    console.error('Erro ao obter informações do usuário:', error);
+                });
         }
         return true
     }
 
     const favoritarPost = (idPost) => {
-       
-        if(!verifcarLogin()){
+
+        if (!verifcarLogin()) {
 
         }
 
@@ -76,7 +80,7 @@ export default function HomeVerPost() {
     };
 
     const darLike = (idPost) => {
-       
+
         if (likesDados[idPost]?.liked) {
             return;
         }
@@ -297,7 +301,12 @@ export default function HomeVerPost() {
                     </div>
                 </div>
                 <div className="Vtexto">
-                    <p>{post.textoPost}</p>
+                    <Quill
+                        value={post.textoPost}
+                        readOnly
+                        theme="snow"
+                        modules={{ toolbar: false }}
+                    />
                 </div>
                 <div className="comentarios">
                     <h3>Comentários</h3>
