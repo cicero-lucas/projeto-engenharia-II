@@ -434,13 +434,32 @@ const deletarComentario = async (req, res) => {
         console.error('Erro ao obter informações do usuário:', error);
         res.status(500).json({ message: 'Erro interno ao obter informações do usuário' });
     }
+
+};
+
+const verFavoritoId = async (req, res)=>{
+    try {
+
+        const favoritos = await FavoritarPost.find().populate('fk_user') 
+        .populate('fk_post'); 
+        res.status(200).json(favoritos);
+
+    } catch (error) {
+        res.status(500).json({ mensagem: 'Erro ao buscar os favoritos', error });
+    }
+};
+
+const deletarFavoritoId= async(req,res) =>{
+        try {
+            const postId = req.params.postId;
+            await FavoritarPost.findByIdAndDelete(postId);
+            res.status(200).json({ mensagem: 'Favorito removido com sucesso!' });
+        } catch (error) {
+            res.status(500).json({ mensagem: 'Erro ao remover o favorito', error });
+        }
+   
+    
 }
-
-
-
-
-
-
 
 module.exports={
     cadastraUsuario,
@@ -458,5 +477,7 @@ module.exports={
     criarComentario,
     editarComentario,
     deletarComentario,
-    me
+    me,
+    verFavoritoId,
+    deletarFavoritoId
 }
