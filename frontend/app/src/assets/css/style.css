@@ -541,3 +541,12 @@ a.posts:hover{
     font-weight: 600;
     font-style: oblique;
 }
+
+
+.quillClasee{
+    border: none;
+}
+
+.ql-editor {
+    border: none; /* Remove a borda ao redor do editor */
+}
