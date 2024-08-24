@@ -33,12 +33,12 @@ Rota.put('/post/like', siteControle.darLike);
 
 Rota.put('/post/deslike', siteControle.desLike);
 
-Rota.get("/buscar/perfil",middleware.verificarLogin,adminControle.buscarPerfil)
+Rota.get("/buscar/perfil",middleware.verificarLogin,adminControle.buscarPerfil);
 Rota.put('/editar/perfil',middleware.verificarLogin,adminControle.editarPerfil);
 
 
 Rota.post('/favoritar/post',middleware.verificarLogin,adminControle.favoritarPosts);
-Rota.get('ver/post/favorito',middleware.verificarLogin,adminControle.verPostfavoritos);
+Rota.get('ver/pos/tfavorito',middleware.verificarLogin,adminControle.verPostfavoritos);
 
 Rota.post('/admin/post',middleware.verificarLogin,uploadImg.single('image'),adminControle.criarPost);
 
@@ -46,10 +46,16 @@ Rota.get('/admin/post/buscaid/:id',middleware.verificarLogin,adminControle.busca
 Rota.put('/admin/post/editar/:id',middleware.verificarLogin,uploadImg.single('image'),adminControle.editarPost);
 Rota.delete('/admin/post/deletar/:id',middleware.verificarLogin,adminControle.ApagarPost);
 
-Rota.get('/admin/meu/post',middleware.verificarLogin,adminControle.buscaMpost)
+Rota.get('/admin/meu/post',middleware.verificarLogin,adminControle.buscaMpost);
 
 Rota.get('/admin/tipo',middleware.verificarLogin,adminControle.verTipo);
 
-Rota.get('/me',middleware.verificarLogin,adminControle.me)
+Rota.get('/me',middleware.verificarLogin,adminControle.me);
+
+Rota.get('/admin/favoritos/',adminControle.verFavoritoId);
+
+Rota.delete('/admin/favoritos/deletar/:postId',adminControle.deletarFavoritoId);
+
+
 
 module.exports=Rota
