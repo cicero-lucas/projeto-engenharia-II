@@ -1,6 +1,9 @@
 require("dotenv").config()
 const express = require("express");
-const Rota = require("./Routers/router");
+const RotaDelete = require("./Routers/routerDelete");
+const RotaGeT = require("./Routers/routerGet");
+const RotaPost = require("./Routers/routerPost");
+const RotaPut = require("./Routers/routerPut");
 const conexaoDb=require('./Database/connexao');
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
@@ -32,7 +35,10 @@ app.use(cors({
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-app.use(Rota);
+app.use(RotaGeT);
+app.use(RotaPost);
+app.use(RotaDelete);
+app.use(RotaPut);
 
 try{
     conexaoDb();
