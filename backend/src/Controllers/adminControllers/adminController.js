@@ -440,8 +440,10 @@ const deletarComentario = async (req, res) => {
 const verFavoritoId = async (req, res)=>{
     try {
 
-        const favoritos = await FavoritarPost.find().populate('fk_user') 
-        .populate('fk_post'); 
+        const favoritos = await FavoritarPost.find().populate({
+        path: 'fk_user',
+        select: '-senha' // Exclui o campo 'senha'
+}).populate('fk_post');
         res.status(200).json(favoritos);
 
     } catch (error) {
