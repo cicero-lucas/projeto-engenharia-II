@@ -8,7 +8,7 @@
 [MongoDB]:https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
 
 
-<h1 align="center">Sprint Books </h1>
+<h1 align="center">TecBlog.click </h1>
 
 
 
