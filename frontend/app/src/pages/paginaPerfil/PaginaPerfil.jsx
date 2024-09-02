@@ -22,7 +22,7 @@ export default function PaginaPerfil(){
     },[])
     return(
         <>
-            <Header titulo="Perfil"></Header>
+            <Header titulo="TecBlog.click Perfil"></Header>
 
             {
                 perfil.length<1 ?

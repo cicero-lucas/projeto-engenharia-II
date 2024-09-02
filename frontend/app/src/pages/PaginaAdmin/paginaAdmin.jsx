@@ -44,7 +44,7 @@ export default function PaginaAdmin() {
 
     return (
         <>
-            <Header titulo="M&N Soluções Digitais" />
+            <Header titulo="TecBlog.click" />
             <div className="meusPosts">
                 <h4>Projetos</h4>
                 <div className="caixaVerpost">

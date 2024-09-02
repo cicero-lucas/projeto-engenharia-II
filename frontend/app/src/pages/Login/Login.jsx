@@ -48,7 +48,7 @@ export default function Login() {
     return (
     <>
         <div className="pagLogin">
-            <HeaderLogin titulo="M&N Soluções Digitais" nomel="cadastro"></HeaderLogin>
+            <HeaderLogin titulo="TecBlog.click" nomel="cadastro"></HeaderLogin>
 
             <div className="caixaLogin">
                 <div className="caixaLimg">

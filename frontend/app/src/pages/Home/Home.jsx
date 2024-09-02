@@ -18,7 +18,7 @@ export default function Home() {
 
     return (
         <>
-            <Header titulo="TechBlog.click" />
+            <Header titulo="TecBlog.click" />
             <div className="main">
                 <div className="caixaLateral">
                 <div><Busca/></div>

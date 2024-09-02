@@ -27,7 +27,7 @@ export default function VerPosts() {
     }, [])
     return (
         <>
-            <Header titulo="ver seus post"></Header>
+            <Header titulo="TecBlog.click"></Header>
             <div className="caixaVerpost">
                 {
                     post.length > 0
