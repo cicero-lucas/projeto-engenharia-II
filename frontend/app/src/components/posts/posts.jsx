@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Quill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; 
+import imgLogin from "../../assets/imagem/apresetacao.png";
 
 export default function Posts({url}) {
     const navigate = useNavigate(); 
@@ -146,7 +147,7 @@ export default function Posts({url}) {
                         {posts.map((el, index) => (
                             <div className="post" key={index}>
                                 <div className="postImg">
-                                    <img src={UrlImg(`${el.caminhoImg}`)} alt={el.caminhoImg} />
+                                    <img src={ el.caminhoImg || el.caminhoImg=="" ? UrlImg(`${el.caminhoImg}`) :imgLogin }  />
                                 </div>
                                 <a href={`/ver/post/${el._id}`} className="posts">
                                     <div className="caixaP">

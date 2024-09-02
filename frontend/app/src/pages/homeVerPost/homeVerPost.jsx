@@ -7,6 +7,7 @@ import './style/homeVerPost.css';
 import verificarToken from '../../middleware/middleware';
 import Quill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Importar o CSS do Quill
+import imgLogin from "../../assets/imagem/apresetacao.png";
 
 
 export default function HomeVerPost() {
@@ -270,9 +271,7 @@ export default function HomeVerPost() {
             <div className="caixaVpost">
                 <div className="caixaImgVpost">
                     <img
-                        src={post.caminhoImg && post.caminhoImg !== "" ? UrlImg(post.caminhoImg) : "../assets/imagem/cadastro.png"}
-                        alt={post.caminhoImg && post.caminhoImg !== ""
-                            ? UrlImg(post.caminhoImg) : "Imagem de cadastro"}
+                        src={post.caminhoImg ?  UrlImg(`${post.caminhoImg}`) :imgLogin }                        
                     />
                     <div className="Vtitulo">
                         <p>{post.tituloPost}</p>
